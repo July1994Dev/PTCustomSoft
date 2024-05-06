@@ -1,2 +1,2 @@
 # PTCustomSoft
-Prueba tecnica de empresa CustomSoft
+Prueba tecnica de Julio German Acevedo Lopez
