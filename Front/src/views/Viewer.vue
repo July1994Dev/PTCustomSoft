@@ -14,6 +14,7 @@ import Background from '../assets/img/background.jpg';
 const route = useRoute();
 const movieId = route.params.id;
 const showActors = ref(false);
+const showtrailer = ref(false);
 const ActiveMovie = ref<Movie>();
 const ActiveDirector = ref<Director>();
 const ActiveGenre = ref<Genre>();
@@ -49,7 +50,8 @@ const openPDF = (path?: string) => {
                     <v-card class="mx-auto" style="background: #b9b9b926;">
                         <v-card-text class="mt-3 backdrop-blur-2xl rounded">
                             <v-card class="mx-auto" max-width="800">
-                                <v-img :cover="false" height="500px" style="object-fit: scale-down !important;" :src="`${serverURL}${ActiveMovie?.posterPath}`"></v-img>
+                                <v-img :cover="false" height="500px" style="object-fit: scale-down !important;"
+                                    :src="`${serverURL}${ActiveMovie?.posterPath}`"></v-img>
 
                                 <v-card-title>
                                     {{ ActiveMovie?.title }}
@@ -92,6 +94,32 @@ const openPDF = (path?: string) => {
                                         </v-card-text>
                                     </div>
                                 </v-expand-transition>
+                                <v-card-actions>
+                                    <v-btn @click="showtrailer = !showtrailer" color="orange-lighten-2"
+                                        text="Trailer"></v-btn>
+
+                                    <v-spacer></v-spacer>
+
+                                    <v-btn :icon="showtrailer ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+                                        @click="showtrailer = !showtrailer"></v-btn>
+                                </v-card-actions>
+
+                                <v-expand-transition>
+                                    <div v-show="showtrailer">
+                                        <v-divider></v-divider>
+
+                                        <v-card-text>
+                                            <video controls
+                                                class="w-100 h-[250px] flex-none object-cover rounded border border-black"
+                                                :src="serverURL + ActiveMovie?.trailerPath">
+                                                <source :src="serverURL + ActiveMovie?.trailerPath" type="video/mp4" />
+                                                <source :src="serverURL + ActiveMovie?.trailerPath" type="video/webm" />
+                                                Tu navegador no soporta la etiqueta de video.
+                                            </video>
+                                        </v-card-text>
+                                    </div>
+                                </v-expand-transition>
+
                             </v-card>
                         </v-card-text>
                     </v-card>
